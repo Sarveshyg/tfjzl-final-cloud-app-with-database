@@ -78,21 +78,22 @@ def show_exam_result(request, course_id, submission_id):
     
     selected_ids = [choice.id for choice in submission.choices.all()]
     
-    total_score = 0
+    grade = 0
     possible_score = 0
     
     for question in course.question_set.all():
         possible_score += question.grade
         if question.is_get_score(selected_ids):
-            total_score += question.grade
+            grade += question.grade
             
-    score = int((total_score / possible_score) * 100) if possible_score > 0 else 0
+    score = int((grade / possible_score) * 100) if possible_score > 0 else 0
     passed = score >= 80
 
     context = {
         'course': course,
         'submission': submission,
         'selected_ids': selected_ids,
+        'grade': grade,
         'possible': possible_score,
         'score': score,
         'passed': passed
