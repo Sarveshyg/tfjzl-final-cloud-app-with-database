@@ -4,18 +4,20 @@
 
 {% block content %}
 <div class="container-fluid mt-4">
-    <!-- Course Name Display -->
+    <!-- Course Name Tag -->
     <h1 class="display-4">{{ course.name }}</h1>
     <p class="lead">{{ course.description }}</p>
 
     <h3 class="mt-4">Lessons</h3>
     
-    <!-- Loop over related lessons with Bootstrap Card Styling -->
+    <!-- Loop over related lessons with Bootstrap Styling -->
     <div class="card-columns mt-3">
         {% for lesson in course.lesson_set.all %}
             <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Lesson {{ lesson.order|add:1 }}: {{ lesson.title }}</h5>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">Lesson {{ lesson.order|add:1 }}: {{ lesson.title }}</h5>
                     <p class="card-text">{{ lesson.content }}</p>
                 </div>
             </div>
@@ -25,7 +27,7 @@
     </div>
 
     <!-- Exam Section with Collapsible Bootstrap Button -->
-    <div class="mt-5">
+    <div class="mt-5 mb-5">
         {% if user.is_authenticated %}
             <button class="btn btn-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#examCollapse" aria-expanded="false" aria-controls="examCollapse">
                 Start Exam
